@@ -40,15 +40,22 @@ body {
 }
 
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     min-height: 100vh;
     width: 100%;
-    padding: clamp(10px, 2vh, 20px);
-    overflow: hidden;
+    padding: clamp(10px, 2vh, 20px) clamp(10px, 2vw, 24px);
+    overflow-x: hidden;
+    overflow-y: auto;
     background: linear-gradient(160deg, #fff9dc 0%, #eef8ff 48%, #dff1ff 100%);
     font-family: Avenir, "Avenir Next", Arial, sans-serif;
+}
+
+.page-shell {
+    min-height: calc(100vh - clamp(20px, 4vh, 40px));
+    width: min(100%, 880px);
+    margin: 0 auto;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    gap: clamp(12px, 2vh, 18px);
 }
 
 .game-wrapper {
@@ -56,7 +63,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: min(100%, 800px);
+    width: 100%;
     max-height: 100%;
     gap: clamp(12px, 2vh, 20px);
     padding: clamp(6px, 1vh, 12px) 0;
@@ -122,6 +129,87 @@ body {
     color: var(--cw-blue);
 }
 
+.difficulty-control {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--cw-ink);
+}
+
+#difficulty-select {
+    padding: 6px 10px;
+    border: 2px solid rgba(46, 157, 247, 0.35);
+    border-radius: 999px;
+    background-color: #fff;
+    color: var(--cw-blue);
+    font-weight: 700;
+    cursor: pointer;
+}
+
+#difficulty-select:focus {
+    outline: none;
+    border-color: var(--cw-blue);
+    box-shadow: 0 0 0 3px rgba(46, 157, 247, 0.2);
+}
+
+#difficulty-select:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+.difficulty-display {
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--cw-blue-dark);
+    background: rgba(46, 157, 247, 0.08);
+    border: 1px solid rgba(46, 157, 247, 0.2);
+    border-radius: 999px;
+    padding: 6px 12px;
+}
+
+.site-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid rgba(46, 157, 247, 0.24);
+    border-radius: 12px;
+    background: linear-gradient(90deg, rgba(255, 201, 7, 0.22) 0%, rgba(46, 157, 247, 0.12) 100%);
+}
+
+.footer-message {
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--cw-blue);
+    text-align: center;
+}
+
+.footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 12px 20px;
+}
+
+.footer-links a {
+    color: var(--cw-blue);
+    font-weight: 800;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+    transition: color 0.18s ease, transform 0.18s ease;
+}
+
+.footer-links a:hover {
+    color: var(--cw-yellow-dark);
+    transform: translateY(-1px);
+}
+
 .water-drop {
     position: absolute;
     width: 60px;  /* increased from 40px */
@@ -144,6 +232,45 @@ body {
 
 .bad-drop {
     background-color: var(--cw-blue-dark);
+}
+
+.drop-feedback {
+    position: absolute;
+    font-size: 30px;
+    font-weight: 800;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    animation: floatFadeOut 1s ease-out forwards;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.drop-feedback-good {
+    color: var(--cw-green, #4FCB53);
+}
+
+.drop-feedback-bad {
+    color: var(--cw-red, #F5402C);
+}
+
+.milestone-message {
+    position: absolute;
+    top: 12%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 8px 14px;
+    font-size: clamp(20px, 3vw, 28px);
+    font-weight: 800;
+    color: var(--cw-yellow);
+    letter-spacing: 0.02em;
+    text-align: center;
+    background: rgba(19, 19, 19, 0.78);
+    border: 2px solid rgba(255, 201, 7, 0.95);
+    border-radius: 10px;
+    text-shadow: 0 3px 10px rgba(0, 0, 0, 0.45);
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.28);
+    pointer-events: none;
+    z-index: 20;
+    animation: milestonePopFade 1.3s ease-out forwards;
 }
 
 .game-title {
@@ -212,6 +339,36 @@ body {
     }
 }
 
+@keyframes floatFadeOut {
+    from {
+        transform: translate(-50%, -50%) translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translate(-50%, -50%) translateY(-42px);
+        opacity: 0;
+    }
+}
+
+@keyframes milestonePopFade {
+    0% {
+        transform: translateX(-50%) translateY(8px) scale(0.95);
+        opacity: 0;
+    }
+    20% {
+        transform: translateX(-50%) translateY(0) scale(1);
+        opacity: 1;
+    }
+    75% {
+        transform: translateX(-50%) translateY(-3px) scale(1);
+        opacity: 0.95;
+    }
+    100% {
+        transform: translateX(-50%) translateY(-14px) scale(0.98);
+        opacity: 0;
+    }
+}
+
 @media (max-width: 850px) {
     .game-wrapper {
         width: 100%;
@@ -235,6 +392,15 @@ body {
 
     #game-container {
         height: min(50vh, 380px);
+    }
+
+    .site-footer {
+        gap: 8px;
+        padding: 12px;
+    }
+
+    .footer-message {
+        font-size: 14px;
     }
 }
 

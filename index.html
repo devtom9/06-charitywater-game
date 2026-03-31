@@ -7,17 +7,36 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="game-wrapper">
-        <h1 class="game-title">Water Drop</h1>
-        <p class="game-tagline">Catch the good drops, avoid the bad ones!</p>
-        <div class="score-panel">
-            <div class="score">Score: <span id="score">0</span></div>
-            <div class="timer">Time: <span id="time">30</span>s</div>
-            <button id="start-btn">Start Game</button>
+    <div class="page-shell">
+        <div class="game-wrapper">
+            <h1 class="game-title">Water Drop</h1>
+            <p class="game-tagline">Catch the good drops, avoid the bad ones!</p>
+            <div class="score-panel">
+                <div class="score">Score: <span id="score">0</span></div>
+                <div class="timer">Time: <span id="time">30</span>s</div>
+                <label for="difficulty-select" class="difficulty-control">
+                    Difficulty
+                    <select id="difficulty-select" aria-label="Select difficulty">
+                        <option value="Easy">Easy</option>
+                        <option value="Normal" selected>Normal</option>
+                        <option value="Hard">Hard</option>
+                    </select>
+                </label>
+                <div class="difficulty-display">Mode: <span id="difficulty-value">Normal</span></div>
+                <button id="start-btn">Start Game</button>
+            </div>
+
+            <div id="game-container">
+            </div>
         </div>
         
-        <div id="game-container">
-        </div>
+        <footer class="site-footer" aria-label="charity water links">
+            <p class="footer-message">Support clean water initiatives</p>
+            <div class="footer-links">
+                <a href="https://www.charitywater.org" target="_blank" rel="noopener noreferrer">charity: water</a>
+                <a href="https://www.charitywater.org/donate" target="_blank" rel="noopener noreferrer">Donate</a>
+            </div>
+        </footer>
     </div>
     
     <script src="script.js"></script>
